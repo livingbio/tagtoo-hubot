@@ -38,6 +38,9 @@ module.exports = (robot) ->
                     else if img_src.match(/^\//)
                         img_url = "http://#{res.request.uri.host}#{img_src}"
                     
+                    else
+                        img_url = img_src
+                    
                     if img_url
                         msg.send img_url
 
