@@ -51,7 +51,7 @@ module.exports = (robot) ->
                     # img_url: article's img url
                     
                     if img_url
-                        preview_message = "<strong>#{title}</strong><br><img src=\"#{img_url}\">"
+                        preview_message = "<strong>#{title}</strong><br><img height=150 src=\"#{img_url}\">"
                     else
                         preview_message = "<strong>#{title}</strong>"
 
