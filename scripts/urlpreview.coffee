@@ -6,6 +6,13 @@ cheerio = require 'cheerio'
 readability = require 'node-readability'
 hipchat = require 'node-hipchat'
 
+capitalize = (s) ->
+    splited = s.split("_")
+    uppered = splited.map (w) -> 
+        w[0] = w[0].toUpperCase()
+        return w
+    return uppered.join " "
+
 module.exports = (robot) ->
     robot.hear /(^|\s)((https?:\/\/)?([\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?))/gi, (msg) ->
         target_url = msg.match[0]
@@ -52,8 +59,7 @@ module.exports = (robot) ->
 
 
                     # hipchat options
-                    console.log "[DEBUG] #{msg.message.room}"
-                    target_room = msg.message.room
+                    target_room = capitalize(msg.message.room)
                     msg_color = 'green'
                     from_name = 'URL Preview'
 
@@ -70,6 +76,7 @@ module.exports = (robot) ->
                     hipchat_client.postMessage hipchat_msg_options, (api_res) ->
                         console.log "API Response:"
                         console.log api_res
+
 
 
 
