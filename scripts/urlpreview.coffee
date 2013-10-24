@@ -28,22 +28,22 @@ module.exports = (robot) ->
                     
                     img_src = img.attribs.src
 
+                    console.log "[DEBUG] #{img_src}"
+
                     msg.send "[Link] #{title}"
 
-                    if img_src.match(/^\./)
+                    if img_src.match(/^\/\//)
+                        img_url = "http:#{img_src}"
+                    else if img_src.match(/^\./)
                         target_url = target_url.replace /#\w*$/g , ""
                         target_url = target_url.replace /\?\w*$/g , ""
                         img_url = target_url + img_src
-
                     else if img_src.match(/^\//)
                         img_url = "http://#{res.request.uri.host}#{img_src}"
-                    
                     else
                         img_url = img_src
                     
                     if img_url
                         msg.send img_url
-
-
 
 
