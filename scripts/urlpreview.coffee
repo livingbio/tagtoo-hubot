@@ -65,6 +65,8 @@ module.exports = (robot) ->
                         color: msg_color
                     }
 
+                    console.log msg
+
                     hipchat_client.postMessage hipchat_msg_options, (api_res) ->
                         console.log "API Response:"
                         console.log api_res
