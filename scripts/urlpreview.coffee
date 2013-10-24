@@ -4,6 +4,7 @@
 request = require 'request'
 cheerio = require 'cheerio'
 readability = require 'node-readability'
+hipchat = require 'node-hipchat'
 
 module.exports = (robot) ->
     robot.hear /(^|\s)((https?:\/\/)?([\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?))/gi, (msg) ->
@@ -28,10 +29,6 @@ module.exports = (robot) ->
                     
                     img_src = img.attribs.src
 
-                    console.log "[DEBUG] #{img_src}"
-
-                    msg.send "[Link] #{title}"
-
                     if img_src.match(/^\/\//)
                         img_url = "http:#{img_src}"
                     else if img_src.match(/^\./)
@@ -42,8 +39,37 @@ module.exports = (robot) ->
                         img_url = "http://#{res.request.uri.host}#{img_src}"
                     else
                         img_url = img_src
+
+                    # title: article's title
+                    # img_url: article's img url
                     
                     if img_url
-                        msg.send img_url
+                        preview_message = "<strong>#{title}</strong><br><img src=\"#{img_url}\">"
+                    else
+                        preview_message = "<strong>#{title}</strong>"
+
+                    hipchat_client = new hipchat process.env.HUBOT_HIPCHAT_TOKEN
+
+
+                    # hipchat options
+                    console.log "[DEBUG] #{msg.message.room}"
+                    target_room = msg.message.room
+                    msg_color = 'green'
+                    from_name = 'URL Preview'
+
+                    hipchat_msg_options = {
+                        room: target_room,
+                        notify: false,
+                        from: from_name,
+                        message: preview_message,
+                        color: msg_color
+                    }
+
+                    hipchat_client.postMessage hipchat_msg_options, (api_res) ->
+                        console.log "API Response:"
+                        console.log api_res
+
+
+
 
 

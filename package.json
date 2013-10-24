@@ -26,7 +26,8 @@
     "nodepie": "",
     "cheerio": "",
     "node-readability": "",
-    "request": ""
+    "request": "",
+    "node-hipchat": ""
   },
   "engines": {
     "node": ">= 0.8.x",
