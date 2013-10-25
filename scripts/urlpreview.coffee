@@ -34,36 +34,39 @@ module.exports = (robot) ->
                         if imgs.length > 0
                             img = imgs[0]
                     
-                    img_src = img.attribs.src
-                    
-                    console.log img
+                    if img
+                        img_src = img.attribs.src
+                        
+                        console.log img
 
-                    # start with double slash
-                    if img_src.match /^\/\//
-                        img_url = "http:#{img_src}"
-                    # start with double dots
-                    else if img_src.match /^\.\./
-                        target_url = target_url.replace /#\w*$/g , ""
-                        target_url = target_url.replace /\?\w*$/g , ""
-                        img_url = target_url + img_src
-                    # start with single dot
-                    else if img_src.match /^\./
-                        target_url = target_url.replace /[^/]*$/, ""
-                        img_url = target_url + img_src
-                    # start with single slash
-                    else if img_src.match /^\//
-                        img_url = "http://#{res.request.uri.host}#{img_src}"
-                    # start with http
-                    else if img_src.match /^http/
-                        img_url = img_src
-                    else
-                        target_url = target_url.replace /[^/]*$/, ""
-                        img_url = target_url + img_src
+                        # start with double slash
+                        if img_src.match /^\/\//
+                            img_url = "http:#{img_src}"
+                        # start with double dots
+                        else if img_src.match /^\.\./
+                            target_url = target_url.replace /#\w*$/g , ""
+                            target_url = target_url.replace /\?\w*$/g , ""
+                            img_url = target_url + img_src
+                        # start with single dot
+                        else if img_src.match /^\./
+                            target_url = target_url.replace /[^/]*$/, ""
+                            img_url = target_url + img_src
+                        # start with single slash
+                        else if img_src.match /^\//
+                            img_url = "http://#{res.request.uri.host}#{img_src}"
+                        # start with http
+                        else if img_src.match /^http/
+                            img_url = img_src
+                        else
+                            target_url = target_url.replace /[^/]*$/, ""
+                            img_url = target_url + img_src
 
                     # title: article's title
                     # img_url: article's img url
+                        
                     
                     if img_url
+                        console.log "[DEBUG] Image URL: #{img_url}" 
                         preview_message = "<strong>#{title}</strong><br><img height=150 src=\"#{img_url}\">"
                     else
                         preview_message = "<strong>#{title}</strong>"
@@ -85,7 +88,6 @@ module.exports = (robot) ->
                     }
 
                     console.log msg
-                    console.log "[DEBUG] Image URL: #{img_url}" 
 
                     hipchat_client.postMessage hipchat_msg_options, (api_res) ->
                         console.log "API Response:"
