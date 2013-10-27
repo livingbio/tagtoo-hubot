@@ -67,7 +67,7 @@ module.exports = (robot) ->
                     
                     if img_url
                         console.log "[DEBUG] Image URL: #{img_url}" 
-                        preview_message = "<strong>#{title}</strong><br><img height=150 src=\"#{img_url}\">"
+                        preview_message = "<strong>#{title}</strong><br><img width=200 src=\"#{img_url}\">"
                     else
                         preview_message = "<strong>#{title}</strong>"
 
