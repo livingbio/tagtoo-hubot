@@ -1,6 +1,6 @@
 
 module.exports = (robot) ->
-  robot.router.post "hubot/hipchat_notify", (req, res) ->
+  robot.router.post "/hubot/hipchat_notify", (req, res) ->
     msg = req.param \msg
     token = req.param \token
 
