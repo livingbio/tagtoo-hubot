@@ -1,3 +1,9 @@
+/*
+HipChat Notification API
+
+send a POST to HipChat via a REST api
+*/
+require! "node-hipchat"
 
 module.exports = (robot) ->
   robot.router.post "/hubot/hipchat_notify", (req, res) ->
@@ -5,11 +11,13 @@ module.exports = (robot) ->
     token = req.param \token
 
     # if token doesn't match, return 'denied'
-    unless token is process.env \HUBOT_SECRET
+    unless token == process.env.HUBOT_SECRET
       res.end "access denied."
 
-    HipchatClient = new (require hipchat) process.env.HUBOT_HIPCHAT_TOKEN
+    # initiate the hipchat API client
+    HipchatClient = new node-hipchat process.env.HUBOT_HIPCHAT_TOKEN
 
+    # hipchat sending parameters
     msgOptions =
       * room: req.param \room or "RD Team"
         notify: true
@@ -19,8 +27,12 @@ module.exports = (robot) ->
 
     console.log msgOptions
 
+    # send message out
     HipchatClient.postMessage msgOptions, (api_res) ->
       console.log api_res
-      res.end api_res
+
+    res.end "succeed."
+
+
 
 
