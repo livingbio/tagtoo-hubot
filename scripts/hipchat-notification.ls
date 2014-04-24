@@ -5,6 +5,8 @@ HipChat Notification Script
 require! "node-hipchat"
 require! winston
 
+hubot-name = "塔圖 機器人"
+
 # initiate the hipchat API client
 HipchatClient = new node-hipchat process.env.HUBOT_HIPCHAT_NOTIFY_TOKEN
 winston.info "Hubot Hipchat client loaded." if HipchatClient
@@ -16,7 +18,7 @@ send-hipchat-msg = (msg, room="RD Team") ->
     * room: room
       message: msg
       notify: true
-      from: "Hubot" # notice: this has a length limitation
+      from: hubot-name # notice: this has a length limitation
       color: "green"
 
   # send message out
