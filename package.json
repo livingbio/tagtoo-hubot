@@ -25,10 +25,10 @@
     "hubot-hipchat": "~2.5.1-5",
     "nodepie": "",
     "cheerio": "",
-    "node-readability": "",
     "request": "",
     "LiveScript": "",
-    "node-hipchat": ""
+    "node-hipchat": "",
+    "winston": ""
   },
   "engines": {
     "node": ">= 0.8.x",
