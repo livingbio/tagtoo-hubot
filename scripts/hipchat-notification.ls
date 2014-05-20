@@ -12,14 +12,14 @@ HipchatClient = new node-hipchat process.env.HUBOT_HIPCHAT_NOTIFY_TOKEN
 winston.info "Hubot Hipchat client loaded." if HipchatClient
 
 # send hipchat notification
-send-hipchat-msg = (msg, room="RD Team") ->
+send-hipchat-msg = (msg, room="RD Team", color="green") ->
   # hipchat sending parameters
   msg-options =
     * room: room
       message: msg
       notify: true
       from: hubot-name # notice: this has a length limitation
-      color: "green"
+      color: color
 
   # send message out
   HipchatClient.postMessage msg-options, (data) ->
@@ -28,11 +28,11 @@ send-hipchat-msg = (msg, room="RD Team") ->
 
 module.exports = (robot) ->
   robot.router.post "/hubot/hipchat_notify", (req, res) ->
-    {token, msg, room} = req.body
+    {token, msg, room, color} = req.body
 
     # if token doesn't match, return 'denied'
     unless token == process.env.HUBOT_SECRET
       res.end "denied."
     else
-      send-hipchat-msg msg, room
+      send-hipchat-msg msg, room, color
       res.end "succeed."
